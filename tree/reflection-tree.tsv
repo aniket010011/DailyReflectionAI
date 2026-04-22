@@ -1,0 +1,34 @@
+id	parentId	type	text	options	target	signal
+START		start	Good evening. Let's reflect on your day.			
+A1_OPEN	START	question	How would you describe today overall?	Productive|Mixed|Tough|Frustrating		
+A1_D1	A1_OPEN	decision		answer=Productive|Mixed:A1_Q_HIGH;answer=Tough|Frustrating:A1_Q_LOW		
+A1_Q_HIGH	A1_D1	question	When things went well today, what made it happen?	My preparation|Team support|Luck|Adaptability		axis1:internal
+A1_Q_LOW	A1_D1	question	When things went wrong, what was your first reaction?	Fix what I could control|Wait for help|Blame circumstances|Feel stuck		axis1:external
+A1_Q2	A1_Q_HIGH	question	When facing a challenge, how did you respond?	Took ownership|Collaborated|Avoided it|Delayed action		axis1:internal
+A1_Q2B	A1_Q_LOW	question	When facing difficulty, what did you do?	Tried to act|Waited|Blamed others|Did nothing		axis1:external
+A1_D2	A1_Q2	decision		answer=Took ownership|Collaborated:A1_R_INT;answer=Avoided it|Delayed action:A1_R_EXT		
+A1_D2B	A1_Q2B	decision		answer=Tried to act:A1_R_INT;answer=Waited|Blamed others|Did nothing:A1_R_EXT		
+A1_R_INT	A1_D2	reflection	You showed ownership today. You recognized your role in outcomes — that's agency.			axis1:internal
+A1_R_EXT	A1_D2B	reflection	Today may have felt out of control, but there were still moments where you had choices.			axis1:external
+BRIDGE_1_2	A1_R_INT	bridge	Now let's shift from control to contribution.		A2_OPEN	
+BRIDGE_1_2B	A1_R_EXT	bridge	Now let's shift from control to contribution.		A2_OPEN	
+A2_OPEN	BRIDGE_1_2	question	Think about your interactions today. What stands out most?	I helped someone|I expected recognition|I supported team goals|I felt overlooked		
+A2_D1	A2_OPEN	decision		answer=I helped someone|I supported team goals:A2_Q_HIGH;answer=I expected recognition|I felt overlooked:A2_Q_LOW		
+A2_Q_HIGH	A2_D1	question	How did you contribute beyond your tasks?	Helped others|Shared knowledge|Took initiative|None		axis2:contribution
+A2_Q_LOW	A2_D1	question	What frustrated you most today?	Lack of recognition|Others' effort|Unfair workload|No support		axis2:entitlement
+A2_Q2	A2_Q_HIGH	question	How often do you go beyond expectations?	Often|Sometimes|Rarely|Never		axis2:contribution
+A2_Q2B	A2_Q_LOW	question	What did you expect today?	Praise|Support|Fairness|Less workload		axis2:entitlement
+A2_D2	A2_Q2	decision		answer=Often|Sometimes:A2_R_CON;answer=Rarely|Never:A2_R_ENT		
+A2_D2B	A2_Q2B	decision		answer=Praise|Support|Fairness|Less workload:A2_R_ENT		
+A2_R_CON	A2_D2	reflection	You focused on what you gave today. Contribution builds trust and growth.			axis2:contribution
+A2_R_ENT	A2_D2B	reflection	It's natural to expect fairness, but growth often comes from what you give, not what you receive.			axis2:entitlement
+BRIDGE_2_3	A2_R_CON	bridge	Now let's expand the perspective beyond yourself.		A3_OPEN	
+BRIDGE_2_3B	A2_R_ENT	bridge	Now let's expand the perspective beyond yourself.		A3_OPEN	
+A3_OPEN	BRIDGE_2_3	question	When thinking about today’s biggest challenge, who comes to mind?	Just me|My team|A colleague|The customer		
+A3_Q1	A3_OPEN	question	Whom did your actions affect most?	Only me|Some people|Team|Customers		axis3:self
+A3_Q2	A3_Q1	question	Whose outcome mattered most in your work today?	Mine|Team|Others|End users		axis3:other
+A3_D1	A3_Q2	decision		answer=Mine:A3_R_SELF;answer=Team|Others|End users:A3_R_OTHER		
+A3_R_SELF	A3_D1	reflection	You focused mostly on your own outcomes today. Expanding your view can bring deeper meaning.			axis3:self
+A3_R_OTHER	A3_D1	reflection	You considered others in your actions. That’s how meaningful work scales beyond self.			axis3:other
+SUMMARY	A3_R_OTHER	summary	Today you showed {axis1.dominant} control, leaned toward {axis2.dominant}, and focused on {axis3.dominant} impact.			
+END	SUMMARY	end	See you tomorrow.			
